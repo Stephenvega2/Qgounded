@@ -1,0 +1,2 @@
+# Qgounded
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f41347e989a242e988f803a0df8ce82a)](https://app.codacy.com/gh/Stephenvega2/Qgounded?utm_source=github.com&utm_medium=referral&utm_content=Stephenvega2/Qgounded&utm_campaign=Badge_Grade)
