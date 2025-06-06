@@ -7,7 +7,7 @@ from kivy.uix.button import Button
 from kivy.graphics import Color, Line, Rectangle
 from kivy.clock import Clock
 from kivy.properties import NumericProperty, ListProperty, StringProperty
-import random
+import secrets  # Replaced random with secrets for secure random number generation
 import json
 import time
 import os
@@ -45,7 +45,7 @@ class GroundingWidget(BoxLayout):
         # Entropy parameters
         self.n_bins = 50  # Bins for histogram
         self.window_size = 100  # Sliding window
-        # New: Energy and efficiency
+        # Energy and efficiency
         self.energy = 0  # Total energy (J)
         # Device simulation
         self.use_device = False  # Toggle for device data
@@ -59,6 +59,7 @@ class GroundingWidget(BoxLayout):
         else:
             self.results_file = f"simulation_results_{int(time.time())}.json"
         self.results_data = []  # Store all results for JSON
+        self.save_header()
         # Initialize UI
         self.orientation = 'vertical'
         self.label = Label(text="[b]Status:[/b] [color=000000]Simulation Running[/color]", markup=True, size_hint=(1, 0.1))
@@ -74,7 +75,7 @@ class GroundingWidget(BoxLayout):
         Clock.schedule_interval(self.update, 1/60)
 
     def save_header(self):
-        # Initialize an empty JSON file or prepare the structure
+        # Initialize an empty JSON file
         try:
             self.results_data = []  # Reset results data
             with open(self.results_file, 'w') as f:
@@ -97,7 +98,8 @@ class GroundingWidget(BoxLayout):
         for i in range(1, len(self.time)):
             # Device data simulation (replace with actual device input)
             if self.use_device:
-                self.device_load = self.base_load + random.uniform(-50, 50)  # Mock device fluctuation
+                # Use secrets.randbelow for cryptographically secure random number
+                self.device_load = self.base_load + (secrets.randbelow(101) - 50)  # Range [-50, 50]
                 self.input_load[i] = self.device_load if self.time[i] < self.t_start else self.surge_load
             # System dynamics
             excess_load = self.input_load[i] - self.base_load
